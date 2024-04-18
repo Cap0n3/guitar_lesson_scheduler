@@ -5,7 +5,7 @@ if __name__ == "__main__":
         "lundi 19 août 2024",
         "jeudi 5 septembre 2024",
         "lundi 21 octobre 2024 au vendredi 25 octobre 2024",
-        "lundi 23 décembre 2024 au vendredi 3 janvier 2025"
+        "lundi 23 décembre 2024 au vendredi 3 janvier 2025",
     ]
 
     datetime_holidays = []

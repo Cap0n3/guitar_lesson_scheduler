@@ -2,8 +2,10 @@ import sys
 import os
 import unittest
 import datetime
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from src.yearcal import YearCal, DateParser
+
 
 class TestYearcal(unittest.TestCase):
     def test_generate_calendar(self):
@@ -65,7 +67,7 @@ class TestYearcal(unittest.TestCase):
             datetime.date(2021, 1, 7),
             datetime.date(2021, 1, 8),
             datetime.date(2021, 1, 9),
-            datetime.date(2021, 1, 10)
+            datetime.date(2021, 1, 10),
         ]
 
         listB = [
@@ -73,29 +75,57 @@ class TestYearcal(unittest.TestCase):
             datetime.date(2021, 1, 3),
             datetime.date(2021, 1, 5),
             datetime.date(2021, 1, 7),
-            datetime.date(2021, 1, 9)
+            datetime.date(2021, 1, 9),
         ]
 
         updated_listA = YearCal.remove_matching_dates(listA, listB)
-        self.assertEqual(updated_listA, [
-            datetime.date(2021, 1, 2),
-            datetime.date(2021, 1, 4),
-            datetime.date(2021, 1, 6),
-            datetime.date(2021, 1, 8),
-            datetime.date(2021, 1, 10)
-        ])
+        self.assertEqual(
+            updated_listA,
+            [
+                datetime.date(2021, 1, 2),
+                datetime.date(2021, 1, 4),
+                datetime.date(2021, 1, 6),
+                datetime.date(2021, 1, 8),
+                datetime.date(2021, 1, 10),
+            ],
+        )
 
-        
-class TestDateParser(unittest.TestCase):    
+    def test_dates_of_weekday_in_range(self):
+        start_date = datetime.date(2023, 12, 1)
+        end_date = datetime.date(2024, 2, 29)
+
+        mondays = YearCal.dates_of_weekday_in_range(start_date, end_date, 0)
+        self.assertEqual(len(mondays), 13)
+
+        self.assertEqual(mondays[0], datetime.date(2023, 12, 4))
+        self.assertEqual(mondays[-1], datetime.date(2024, 2, 26))
+
+        start_date = datetime.date(2022, 7, 1)
+        end_date = datetime.date(2024, 12, 31)
+
+        tuesdays = YearCal.dates_of_weekday_in_range(start_date, end_date, 1)
+        self.assertEqual(len(tuesdays), 131)
+
+        self.assertEqual(tuesdays[0], datetime.date(2022, 7, 5))
+        self.assertEqual(tuesdays[-1], datetime.date(2024, 12, 31))
+
+
+class TestDateParser(unittest.TestCase):
     def test_parse_french_date_range(self):
         false_date_range = "1 janvier 2021 au 3 janvier 2020"
-        self.assertRaises(ValueError, DateParser.parse_french_date_range, false_date_range)
+        self.assertRaises(
+            ValueError, DateParser.parse_french_date_range, false_date_range
+        )
 
         false_date_range = "1 janvier 2021 au 3 janvier 2021 au 5 janvier 2021"
-        self.assertRaises(ValueError, DateParser.parse_french_date_range, false_date_range)
+        self.assertRaises(
+            ValueError, DateParser.parse_french_date_range, false_date_range
+        )
 
         empty_date_range = ""
-        self.assertRaises(ValueError, DateParser.parse_french_date_range, empty_date_range)
+        self.assertRaises(
+            ValueError, DateParser.parse_french_date_range, empty_date_range
+        )
 
         one_date = "le 1 janvier 2021"
         dates = DateParser.parse_french_date_range(one_date)
@@ -103,23 +133,30 @@ class TestDateParser(unittest.TestCase):
 
         date_range = "lundi 21 octobre 2024 au mercredi 23 octobre 2024"
         dates = DateParser.parse_french_date_range(date_range)
-        self.assertEqual(dates, [
-            datetime.date(2024, 10, 21), 
-            datetime.date(2024, 10, 22), 
-            datetime.date(2024, 10, 23)
-        ])
+        self.assertEqual(
+            dates,
+            [
+                datetime.date(2024, 10, 21),
+                datetime.date(2024, 10, 22),
+                datetime.date(2024, 10, 23),
+            ],
+        )
 
         date_range = "le lundi 1 novembre 2025, au moins jusqu'au 7 novembre 2025"
         dates = DateParser.parse_french_date_range(date_range)
-        self.assertEqual(dates, [
-            datetime.date(2025, 11, 1), 
-            datetime.date(2025, 11, 2), 
-            datetime.date(2025, 11, 3), 
-            datetime.date(2025, 11, 4), 
-            datetime.date(2025, 11, 5),
-            datetime.date(2025, 11, 6),
-            datetime.date(2025, 11, 7),
-        ])
+        self.assertEqual(
+            dates,
+            [
+                datetime.date(2025, 11, 1),
+                datetime.date(2025, 11, 2),
+                datetime.date(2025, 11, 3),
+                datetime.date(2025, 11, 4),
+                datetime.date(2025, 11, 5),
+                datetime.date(2025, 11, 6),
+                datetime.date(2025, 11, 7),
+            ],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
