@@ -7,11 +7,21 @@ import re
 
 class YearCal:
     @staticmethod
-    def generate_calendar(year):
+    def generate_calendar(dates):
         """
-        Generate a text calendar for a given year.
+        Generate a text calendar for the year(s) of the provided list of dates,
+        marking the given dates with an asterisk (*), preserving layout.
+
+        Parameters
+        ----------
+        dates: List of datetime.date objects.
+
+        Returns
+        -------
+        A string representation of the calendar with marked dates.
         """
         pass
+
 
     @staticmethod
     def dates_of_weekday_in_year(year, weekday):
@@ -92,9 +102,9 @@ class DateParser:
         Parse a French date range string and return a list of datetime.date objects.
 
         Example:
-            "1 janvier 2021 au 3 janvier 2021"
-            "Du 1 janvier 2021 jusqu'au 3 janvier 2021"
-            "le 1 janvier 2021"
+            "1 janvier 2021 au 3 janvier 2021" -> [datetime.date(2021, 1, 1), datetime.date(2021, 1, 2), datetime.date(2021, 1, 3)]
+            "Du 1 janvier 2021 jusqu'au 3 janvier 2021" -> [datetime.date(2021, 1, 1), datetime.date(2021, 1, 2), datetime.date(2021, 1, 3)]
+            "le 1 janvier 2021" -> [datetime.date(2021, 1, 1)]
 
         Parameters
         ----------

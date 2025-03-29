@@ -17,7 +17,7 @@ if __name__ == "__main__":
         dates = DateParser.parse_french_date_range(holiday)
         datetime_holidays.extend(dates)
 
-    # Get all monday dates in 2024
+    # Get all monday dates for school year 2023-2024
     mondays = YearCal.dates_of_weekday_in_range(
         datetime.date(2023, 9, 1), datetime.date(2024, 6, 30), 0
     )
@@ -25,5 +25,6 @@ if __name__ == "__main__":
     # Remove all holidays from the list of mondays
     lesson_mondays = YearCal.remove_matching_dates(mondays, datetime_holidays)
 
-    print(len(lesson_mondays))
+    # print(len(lesson_mondays))
     print(lesson_mondays)
+    print(YearCal.generate_calendar(lesson_mondays))
